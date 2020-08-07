@@ -3,6 +3,13 @@ A MWE of using the apriltag library with cmake to generate makefiles.
 
 I had a very hard time getting the apriltag library to work with cmake.  I use cmake all the time, so decided to put together a little minimal working example.  I'm being sort of brief, but if you have questions, just open an issue.
 
+Contents:
+- a working CMakeLists.txt.
+- example `opencv_demo.cc` from the apriltag `example` directory.
+- example `apriltag_demo.c` from the apriltag `example` directory.
+- these instructions. 
+
+## Install apriltag
 Install the [apriltag lib](https://github.com/AprilRobotics/apriltag.git). Set the install path.  I do this by:
 
 ````bash
@@ -19,18 +26,52 @@ make
 sudo make install
 ````
 
+## clone this repo
 
+````bash
+git clone https://github.com/amy-tabb/apriltag-cmake-example.git
 
+````
 
+then 
 
+````bash
+cd apriltag-cmake-example
+mkdir build
+cd build
+````
 
-First, make sure the package-config path is correct:
+## Make sure pkg-config can find apriltag
+Here, you need to do some searching we're going to use [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/) to do all of the work of setting the compiler and linker options.  Trouble is, sometimes the apriltag pkg-config file is not on the `PKG_CONFIG_PATH`. 
 
+First, what's your path?
+
+````bash
+ echo $PKG_CONFIG_PATH
+````
+
+See anything with apriltag in there?  If not, you will need to add the folder with `apriltag.pc`:
+
+````bash
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/apriltag/lib/pkgconfig
+````
+
+to make this stick across bash sessions, put this line in  `~/.profile` (more commentary on setting environment variables in Ubuntu [here](https://help.ubuntu.com/community/EnvironmentVariables)).
 
 
-sudo to make this stick.
+## cross your fingers and try cmake  
 
+Now you can try to generate a Makefile with cmake. I am totally skipping OpenCV, but I am assuming that you have OpenCV installed.  If you don't, no worries.  Comment out all of the OpenCV stuff in the CMakeLists.txt file using a #:
+
+- find_package(OpenCV REQUIRED)
+- (all 3 lines) add_executable(opencv_demo
+opencv_demo.cc
+)
+- target_link_libraries(opencv_demo ${apriltag_LIBRARIES} ${OpenCV_LIBS})
+
+The OpenCV demo will not be built, but the apriltag one will.  
+
+Then, there are a few different options for cmake, 
 
 - `cmake ../src`  (basic)
 - `cmake  -DCMAKE_BUILD_TYPE=Release ../src` (Release configuration)
@@ -41,4 +82,21 @@ In case you have installed OpenCV and cmake can't find it, you need to specify t
 
 `-DCMAKE_PREFIX_PATH=dir`
 
-https://github.com/AprilRobotics/apriltag_ros/blob/master/apriltag_ros/CMakeLists.txt
+to the command line.  Alternatively, you could use the `cmake-gui` option I used earlier.
+
+## Make and test
+
+Then make and test, 
+
+````bash
+make
+````
+
+you should have two files (if you used the OpenCV option too), opencv_demo and apriltag_demo.
+
+run as usual, `./apriltag_demo`.
+
+## Other resources
+
+My source for this working `CMakeLists.txt` was this other [`CMakeLists.txt`](https://github.com/AprilRobotics/apriltag_ros/blob/master/apriltag_ros/CMakeLists.txt) from the `apriltag_ros` project. FYI if you have a more complex project. 
+
