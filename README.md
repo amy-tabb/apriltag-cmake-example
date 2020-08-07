@@ -56,7 +56,7 @@ See anything with apriltag in there?  If not, you will need to add the folder wi
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/apriltag/lib/pkgconfig
 ````
 
-to make this stick across bash sessions, put this line in  `~/.profile` (more commentary on setting environment variables in Ubuntu [here](https://help.ubuntu.com/community/EnvironmentVariables)).
+to make this stick across bash sessions, put an `export PKG_CONFIG_PATH=` in `~/.profile` (more commentary on setting environment variables in Ubuntu [here](https://help.ubuntu.com/community/EnvironmentVariables)), but use the output of  `echo $PKG_CONFIG_PATH`.  Otherwise, the `PKG_CONFIG_PATH=$PKG_CONFIG_PATH` will result in a longer and longer string.  (Note, I have never had to do this will other libraries.)
 
 
 ## cross your fingers and try cmake  
