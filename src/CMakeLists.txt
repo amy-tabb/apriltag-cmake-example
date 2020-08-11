@@ -19,10 +19,19 @@ add_executable(opencv_demo
 opencv_demo.cc
 )
 
+add_executable(opencv-demo-read
+opencv-demo-read.cpp
+opencv-demo-read.hpp
+DirectoryFunctions.hpp
+DirectoryFunctions.cpp
+)
+
 add_executable(apriltag_demo
 apriltag_demo.c
 )
 
 target_link_libraries(opencv_demo ${apriltag_LIBRARIES} ${OpenCV_LIBS})
+
+target_link_libraries(opencv-demo-read ${apriltag_LIBRARIES} ${OpenCV_LIBS})
 
 target_link_libraries(apriltag_demo ${apriltag_LIBRARIES})
