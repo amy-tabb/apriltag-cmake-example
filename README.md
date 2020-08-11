@@ -8,6 +8,7 @@ Contents:
 - example `opencv_demo.cc` from the apriltag `example` directory.
 - example `apriltag_demo.c` from the apriltag `example` directory.
 - these instructions. 
+- I also added `opencv-demo-read.**`, so you can read from a directory, or use a camera.
 
 ## Install apriltag
 Install the [apriltag lib](https://github.com/AprilRobotics/apriltag.git). Set the install path.  I do this by:
@@ -95,6 +96,8 @@ make
 you should have two files (if you used the OpenCV option too), opencv_demo and apriltag_demo.
 
 run as usual, `./apriltag_demo`.
+
+The new demo is `opencv-demo-read`.  Run that one with the help by `./opencv-demo-read --help`.
 
 ## Other resources
 
