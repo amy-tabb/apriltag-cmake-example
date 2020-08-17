@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
         };
 
 
+
         if (print_help == 1){
 
             cout << "Printing help for opencv-demo-read, August 2020."<< endl;
@@ -146,6 +147,7 @@ int main(int argc, char *argv[])
 
     if (!video){
         ///////// CHECK THAT DIRECTORIES EXIST /////////////////
+        cout << "No video option selected. " << endl;
 
         if (IsDirectory(input_dir) == false){
             cout << "cannot access " << input_dir << endl;
@@ -189,7 +191,7 @@ int main(int argc, char *argv[])
     int number_types = int(tag_string.size());
 
     for (int i = 0; i < number_types; i++){
-        if (family_name.compare(string("tag36h11")) == 0){
+        if (family_name.compare(tag_string[i]) == 0){
             tag_index = i;
             tf = tag_create_functions[tag_index]();
             i = number_types; // exit the loop
